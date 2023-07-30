@@ -23,7 +23,8 @@ jobs:
         if: always()
         with:
           status: ${{ job.status }}
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          text: |
+            Job ${{ job.status }}. <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View details on GitHub>
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
