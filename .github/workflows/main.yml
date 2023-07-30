@@ -3,8 +3,6 @@ permissions:
   contents: write
   pull-requests: write
 on:
-  schedule:
-    - cron: '37 2 * * 0' # sunday at 02:37
   workflow_dispatch: {}
 
 jobs:
@@ -15,7 +13,10 @@ jobs:
         uses: actions/checkout@v2
       
       - name: hi
-        uses: dsadsava
+        run: |
+          sudo apt-get update
+          echo "byebye"
+          exit 1
 
       - name: Notify Slack
         uses: 8398a7/action-slack@v3
