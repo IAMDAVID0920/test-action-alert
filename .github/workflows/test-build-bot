@@ -1,1 +1,24 @@
+name: Notify Slack
 
+on:
+  schedule:
+    - cron: '37 2 * * 0' # sunday at 02:37
+  workflow_dispatch: {}
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Notify Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MSG_SUCCESS: ':white_check_mark: The build was successful!'
+          MSG_FAILURE: ':x: The build failed.'
